@@ -5,28 +5,36 @@
 #basic-nav-dropdown {
     color: white;
 }
+.MuiDataGrid-columnHeaderTitle, th.MuiTableCell-root {
+    font-size: x-large; 
+}
 
-.MuiDataGrid-columnHeaderTitle, .MuiDataGrid-cellContent {
+.MuiDataGrid-cellContent, td.MuiTableCell-root {
     font-size: large;
+    cursor: pointer; 
+
 }
 
 p.MuiTablePagination-displayedRows{
     font-size: large;
     color: gray;
+    margin: auto;
 }
-
 
 .my-node-enter {
-opacity: 0;
+    opacity: 0;
 }
+
 .my-node-enter-active {
-opacity: 1;
-transition: opacity 200ms;
+    opacity: 1;
+    transition: opacity 200ms;
 }
+
 .my-node-exit {
-opacity: 1;
+    opacity: 1;
 }
+
 .my-node-exit-active {
-opacity: 0;
-transition: opacity 200ms;
+    opacity: 0;
+    transition: opacity 200ms;
 }

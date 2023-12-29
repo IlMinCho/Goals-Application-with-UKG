@@ -26,8 +26,10 @@ async def root():
 from .employees import employees_router
 from .goals import goals_router
 from .comments import comments_router
+from .auth_end import auth_router
 
 router.include_router(goals_router)
 router.include_router(employees_router)
 router.include_router(comments_router)
+router.include_router(auth_router)
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -13,39 +13,22 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { useNavigate } from "react-router-dom";
-import Pageview from '@mui/icons-material/Pageview';
-
-
-
-
-function createData(name, id, title) {
-  return {
-    name,
-    id,
-    title,
-    goals: [
-      {
-        createdate: '2020-01-05',
-        goalname: 'Test Employee Dashboard Frontend',
-        description: "Try to break inputs, look for undefined behavior.",
-        type: "Dev"
-      },
-      {
-        createdate: '2020-01-02',
-        goalname: 'Spend More Time Outside',
-        description: "Vitamin D, fresh air, exercise! Before it gets cold.",
-        type: "Personal"
-      },
-    ],
-  };
-}
+import Image from 'react-bootstrap/Image';
+import icon from './icon2.png';
+import ReviewsIcon from '@mui/icons-material/Reviews';
+import PersonIcon from '@mui/icons-material/Person';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import Badge from 'react-bootstrap/Badge';
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import ToggleButton from 'react-bootstrap/ToggleButton';
 
 function Row(props) {
-  const { row } = props;
+  const { user } = props;
+  const { goals } = props;
+  const { setCurUser } = props;
   const [open, setOpen] = React.useState(false);
-  const navigate = useNavigate();
-
 
   return (
     <React.Fragment>
@@ -54,17 +37,23 @@ function Row(props) {
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={() => setOpen(!open)}
+            onClick={() => goals.length===0?setOpen(false):setOpen(!open)}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
           
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+         
+        <IconButton size="small" onClick={() => {
+            setCurUser( user.id )
+          }}>
+          {<PersonIcon color="primary"/>}
+          <strong>{user.firstname + " " + user.lastname}  </strong>
+        </IconButton>
         </TableCell>
-        <TableCell >{row.id}</TableCell>
-        <TableCell >{row.title}</TableCell>
+        <TableCell >{user.id}</TableCell>
+        <TableCell >{user.title}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -76,25 +65,30 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Creation Date</TableCell>
-                    <TableCell>Goal Name</TableCell>
+                    <TableCell>Goal Title</TableCell>
+                    <TableCell>Start Date</TableCell>
+                    <TableCell>Completion Date</TableCell>
                     <TableCell>Description</TableCell>
-                    <TableCell>Type</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.goals.map((GoalsRow) => (
-                    <TableRow key={GoalsRow.createdate}>
+                  {goals.map((GoalsRow) => (
+                    <TableRow key={GoalsRow.id}>
                       <TableCell component="th" scope="row">
-                        <IconButton size="small" onClick={() => navigate('/goalview')}>
-                          {<Pageview color="warning"/>}
+                        <IconButton size="small" onClick={() => props.activateModal(GoalsRow)}>
+                          {<ReviewsIcon color="primary"/>}
+                           {GoalsRow.title}
                         </IconButton>
-                        {GoalsRow.createdate}
+                       
                       </TableCell>
-                      <TableCell>{GoalsRow.goalname}</TableCell>
-                      <TableCell>{GoalsRow.description}</TableCell>
                       <TableCell>
-                        {GoalsRow.type}
+                        {GoalsRow.startdate} 
+                      </TableCell>
+                      <TableCell>
+                        {GoalsRow.completedate}
+                      </TableCell>
+                      <TableCell>
+                        {GoalsRow.description}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -108,48 +102,38 @@ function Row(props) {
   );
 }
 
-Row.propTypes = {
-  row: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    
-    Goals: PropTypes.arrayOf(
-      PropTypes.shape({
-        description: PropTypes.number.isRequired,
-        goalname: PropTypes.string.isRequired,
-        createdate: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-  }).isRequired,
-};
 
-const rows = [
-  createData('Jill Johnson', 159, 'Engineer', 24, 4.0, 3.99),
-  createData('Tim Thompson', 237, 'Project Manager', 37, 4.3, 4.99),
-  createData('Eclair', 262, "Engineer", 24, 6.0, 3.79),
-];
-
-export default function CollapsibleTable() {
+export default function ManagerDashboard(setCurUser, activateModal, getUsers, user, goals) {
+  const users = getUsers(user);
   return (
-    <div style={{width:"80%"}}>
+    <box style={{width:"100%"}}>
+    <br/>
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
+            <TableCell className="fw-bold fs-2" style={{color: '#005151'}} colSpan={2}>
+              <Image height="50" src={icon}/>
+              Your Employees
+            </TableCell>
+            </TableRow>
+          <TableRow>
             <TableCell />
-            <TableCell style={{width: '200px'}}>Name</TableCell>
-            <TableCell style={{width: '80px'}}>ID</TableCell>
+            <TableCell sx={{width: 300}}>Name</TableCell>
+            <TableCell sx={{width: 80}}>ID</TableCell>
             <TableCell>Title</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
+          {users.map((user) => (
+            <Row key={user.id} setCurUser={setCurUser}
+              goals={goals.filter((goal)=>goal.assignedto===user.id)}
+              user = {user} activateModal={activateModal}
+              />
           ))}
         </TableBody>
       </Table>
     </TableContainer>
-    </div>
+    </box>
   );
 }

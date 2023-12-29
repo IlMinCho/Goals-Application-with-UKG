@@ -6,9 +6,11 @@ from sqlalchemy.orm import relationship
 from .base import Base, BaseModel
 
 class GoalStatus(str, enum.Enum):
-    to_do = 'To Do'
-    in_progress = 'In Progress'
-    completed = 'Completed'
+    to_do = 'Not-Started'
+    in_progress = 'In-Progress'
+    done = 'Done'
+    missed = 'Missed'
+    archived = 'Archived'
 
 class Goal(Base, BaseModel):
     __tablename__ = 'goals'
@@ -17,5 +19,8 @@ class Goal(Base, BaseModel):
     assignee_id = Column(Integer, ForeignKey("employees.id"))
     assignee = relationship("Employee", back_populates="goals")
     status = Column(Enum(GoalStatus))
+    comments = relationship("Comment")
     start_date = Column(DateTime)    
-    end_date = Column(DateTime, nullable=True)
+    end_date = Column(DateTime)
+    created_by = Column(Integer)
+    created_at = Column(DateTime)

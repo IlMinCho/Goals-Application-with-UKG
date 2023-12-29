@@ -11,3 +11,4 @@ class AuthEnd(Base, BaseModel):
     username = Column(String(50))
     password = Column(String(50))
     employee_ref = Column(Integer, ForeignKey("employees.id"))
+    employee = relationship("Employee")

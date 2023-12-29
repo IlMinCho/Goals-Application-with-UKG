@@ -1,0 +1,115 @@
+  .GoalMain {
+    text-align: center;
+    padding: 5rem 1rem;
+    background-color: #30CEBB;
+    min-height: 100vh;
+  }
+
+  .GoalMain .heading{
+    font-family: Times, serif;
+    font-size: 2rem;
+  }
+
+  .GoalMain .error {
+    color: #fc8181;
+    font-size: 0.75rem;
+    text-align: left;
+    margin-top: 0.25rem;
+  }
+  
+  .GoalMain .checkbox {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  
+  .GoalMain nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .GoalMain h3{
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+
+  .GoalMain nav h3 {
+    margin: 1rem;
+    cursor: pointer;
+    color: #718096;
+  }
+
+  .GoalMain nav h3:hover {
+    color: white;
+  }
+  
+  .GoalMain form {
+    width: 95%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .GoalMain form label {
+    font-size: 1rem;
+    font-weight: bold;
+    display: block;
+    text-align: left;
+    margin: 1rem 0 0.2rem;
+  }
+  
+  .GoalMain input,.GoalMain textarea, .GoalMain select {
+    width: 100%;
+    padding: 0.65rem 0.5rem;
+    font-size: 1rem;
+    color: white;
+    border: 2px solid #4a5568;
+    background-color: #2d3748;
+    border-radius: 10px;
+    outline: none;
+  }
+  
+  .GoalMain input:focus, .GoalMain select:focus {
+    border-color: #4299e1;
+  }
+  
+  .GoalMain input::placeholder, .GoalMain select::placeholder {
+    color: #a0aec0;
+  }
+  
+  .GoalMain input[type="checkbox"] {
+    width: fit-content;
+    margin-right: 0.5rem;
+    height: 200px;
+    transform: scale(1.25);
+  }
+  
+  .GoalMain .submitButton {
+    display: block;
+    margin: 1rem 0;
+    padding: 0.35rem 0.5rem;
+    background-color: #4299e1;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 3px;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .GoalMain .cancelButton {
+    display: block;
+    margin: 1rem 0;
+    padding: 0.35rem 0.5rem;
+    background-color:  #ffbb33;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 3px;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
